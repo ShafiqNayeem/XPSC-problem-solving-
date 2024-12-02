@@ -1,0 +1,29 @@
+class Solution {
+  public:
+    int lenOfLongestSubarr(vector<int>& arr, int k) {
+  unordered_map<int, int> sumMap;
+    int sumCurrent = 0;
+    int mxLength = 0;
+
+    for (int i = 0; i < arr.size(); i++) {
+        sumCurrent += arr[i];
+
+        
+        if (sumCurrent == k) {
+            mxLength = i + 1;
+        }
+
+        
+        if (sumMap.find(sumCurrent - k) != sumMap.end()) {
+            mxLength = max(mxLength, i - sumMap[sumCurrent - k]);
+        }
+
+        
+        if (sumMap.find(sumCurrent) == sumMap.end()) {
+            sumMap[sumCurrent] = i;
+        }
+    }
+
+    return mxLength;
+    }
+};
